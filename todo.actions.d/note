@@ -5,6 +5,7 @@ TODO_NOTE_TAG="note"
 TODO_NOTE_TEMPLATE="XXX"
 TODO_NOTE_EXT=".rst"
 TODO_NOTE_ARCHIVE="$TODO_NOTES_DIR/archive$TODO_NOTE_EXT"
+DEBUG=1
 
 usage() {
     echo "    $(basename $0) add|a ITEM#"
@@ -13,6 +14,10 @@ usage() {
     echo "      Opens in EDITOR the note related with the task on line ITEM# or the notes archive."
     echo "    $(basename $0) show|s ITEM#|archive|a"
     echo "      Shows the note related with the task on line ITEM# or the notes archive."
+}
+
+logd(){
+    [ 1 = $DEBUG ] && echo $@
 }
 
 getnotenamefromnumber() {
@@ -36,6 +41,7 @@ getnotenamefromtext() {
     # Postcondition:
     #     $notename contains note name, if task has note.
 
+    logd "Looking for note name in $1"
     notename=$(echo "$1" | grep -o " $TODO_NOTE_TAG:[^ .]*\.link" | grep -o "[^:]*\.link")
 }
 
@@ -144,10 +150,12 @@ case "$TODO_NOTE_ACTION" in
         cat "$TODO_NOTES_DIR/${notename}" >> "$TODO_NOTE_ARCHIVE"
         echo >> "$TODO_NOTE_ARCHIVE" ## Add blank line
         REALFILE=$(readlink -f "$TODO_NOTES_DIR/${notename}")
-        echo "Removing link: $TODO_NOTES_DIR/${notename}"
-        echo "Removing real note: $REALFILE"
+        logd "Removing link: $TODO_NOTES_DIR/${notename}"
+        logd "Removing real note: $REALFILE"
         __remove_file "$TODO_NOTES_DIR/${notename}"
         __remove_file "$REALFILE"
+    else
+        logd "No note found"
     fi
     ;;
 
