@@ -1,0 +1,17 @@
+#!/bin/bash
+
+action=$1
+shift
+
+[ "$action" = "usage" ] && {
+  echo "  List by @project:"
+  echo "    lsgp"
+  echo "      generates a textual report of pending and completed tasks in all projects and contexts"
+  echo "      and groups them by the context they belong to."
+  echo ""
+  exit
+}
+
+[ "$action" = "lsgp" ] && {
+    python ${TODO_ACTIONS_DIR}/lsgroup.py "$TODO_FILE" -p
+}

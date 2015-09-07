@@ -1,0 +1,16 @@
+#!/bin/bash
+
+action=$1
+shift
+
+[ "$action" = "usage" ] && {
+  echo "  ls only todo tasks which have a priority set to them from (A)...(E):"
+  curcmd=`basename $0`
+  echo "    $curcmd \"THING I NEED TO DO +project @context\""
+  echo ""
+  exit
+}
+
+
+# I guess just call this mini-shortcut
+"$TODO_FULL_SH" command ls "'\|(A)\|(B)\|(C)\|(D)\|(E)'"
