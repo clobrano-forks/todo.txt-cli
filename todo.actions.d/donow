@@ -40,10 +40,10 @@ ONE_MINUTE=${ONE_MINUTE-60}      # for tests reasons. Do not modify
 # Create log file if it doesn't exist.
 elog()
 {
-    if [ ! -z ${EVIDENCE_LOG} ] && [ ! -f ${EVIDENCE_LOG} ] ; then
-        touch ${EVIDENCE_LOG}
+    if [ ! -z "${EVIDENCE_LOG}" ] && [ ! -f "${EVIDENCE_LOG}" ] ; then
+        touch "${EVIDENCE_LOG}"
     fi
-    if [ -f ${EVIDENCE_LOG} ] ; then
+    if [ -f "${EVIDENCE_LOG}" ] ; then
         echo $(date "+%F %T") "$1" >> "${EVIDENCE_LOG}"
     fi
 }
@@ -70,7 +70,13 @@ update_activity()
 # Wrapper function to pop-up a notification using libnotify
 signal()
 {
-    [[ $DESKTOP_NOTIFICATION = true ]] && notify-send -u critical -i appointment-soon -t 300 "$1" "$2"
+    if [[ $DESKTOP_NOTIFICATION = true ]]; then
+        if [ "$(uname)" == "Darwin" ]; then
+            osascript -e "display notification \"$2\" with title \"$1\""
+        else
+            notify-send -u critical -i appointment-soon -t 300 "$1" "$2"
+        fi
+    fi
 }
 
 # Actual counter function
