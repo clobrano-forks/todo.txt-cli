@@ -70,7 +70,13 @@ update_activity()
 # Wrapper function to pop-up a notification using libnotify
 signal()
 {
-    [[ $DESKTOP_NOTIFICATION = true ]] && notify-send -u critical -i appointment-soon -t 300 "$1" "$2"
+    if [[ $DESKTOP_NOTIFICATION = true ]]; then
+        if [ "$(uname)" == "Darwin" ]; then
+            osascript -e "display notification \"$2\" with title \"$1\""
+        else
+            notify-send -u critical -i appointment-soon -t 300 "$1" "$2"
+        fi
+    fi
 }
 
 # Actual counter function
