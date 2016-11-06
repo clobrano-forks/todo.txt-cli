@@ -2,6 +2,6 @@
 
 [ "$1" = "usage" ] && exit 0
 
-grep "^x" "$TODO_FILE" | while read -r line; do "$TODO_SH" note __archive $line; done
+grep "^x" "$TODO_FILE" | while read -r line; do "$TODO_FULL_SH" note __archive $line; done
 
-"$TODO_SH" command "$@"
+"$TODO_FULL_SH" command "$@"

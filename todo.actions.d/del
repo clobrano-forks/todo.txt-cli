@@ -9,6 +9,6 @@ if [ -z "$3" ]; then
     getTodo "$item"
 fi
 
-"$TODO_SH" command "$@"
+"$TODO_FULL_SH" command "$@"
 
-[ $? -eq 0 ] && [ -z "$3" ] && "$TODO_SH" note __rmfromtext "DDDD$todo"
+[ $? -eq 0 ] && [ -z "$3" ] && "$TODO_FULL_SH" note __rmfromtext "DDDD$todo"
