@@ -3,4 +3,4 @@
 [ "$1" = "usage" ] && exit 0
 
 shift
-"$TODO_SH" del "$@"
+"$TODO_FULL_SH" del "$@"

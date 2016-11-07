@@ -53,14 +53,14 @@ update_activity()
     if [[ ! $WORKED_TIME -eq 0 ]]; then
         echo
         if [[ $curr_time_worked = false ]]; then
-            "$TODO_SH" command append $ITEM "min:$WORKED_TIME"
+            "$TODO_FULL_SH" command append $ITEM "min:$WORKED_TIME"
         else
             let "curr_time_worked = $curr_time_worked + $WORKED_TIME"
             # pruning priority from summary
             no_pri_summary=`echo $summary | sed -E "s_\([A-Z]+\) __g"`
             # updating minutes counter
             new_summary=`echo "$no_pri_summary" | sed -E "s/min:[0-9]+/min:$curr_time_worked/g"`
-            "$TODO_SH" command replace $ITEM "$new_summary"
+            "$TODO_FULL_SH" command replace $ITEM "$new_summary"
         fi
     fi
     elog "stop : ${SUMMARY}"
